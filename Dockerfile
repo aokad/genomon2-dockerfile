@@ -84,7 +84,7 @@ RUN apt-get -y update && \
 # perl package
 RUN set -xv && \
     apt-get -y update && \
-    echo "deb http://www.deb-multimedia.org jessie main non-free" >> /etc/apt/sources.list && \
+    echo "deb http://ftp.jp.debian.org/debian/ jessie main contrib non-free" >> /etc/apt/sources.list && \
     apt-get -y update && \
     apt-get install -y build-essential dh-autoreconf dpkg-dev g++ gcc libc6-dev libcurl4-gnutls-dev libgd2-xpm-dev libgnutls28-dev \
                        libjson-perl libncurses-dev libncurses5-dev libp11-kit-dev \
@@ -259,17 +259,10 @@ RUN apt-get install -y unzip && \
 
 # R package
 RUN set -xv && \
+    echo "deb http://deb.debian.org/debian testing main" >> /etc/apt/sources.list && \
     apt-get -y update && \
-    apt-get install -y r-base && \
-    apt-get install -y libcurl4-openssl-dev && \
-    apt-get install -y libdbd-mysql libmysqlclient-dev && \
-    apt-get install -y libgeos-dev && \
-    apt-get install -y libxml2-dev && \
-    apt-get install -y libssl-dev && \
-    apt-get install -y python && \
-    apt-get install -y python-pip && \
-    apt-get install -y git && \
-    \
+    apt-get install -y r-base libcurl4-openssl-dev libdbd-mysql libmysqlclient-dev libgeos-dev libxml2-dev libssl-dev && \
+    echo "options(repos='https://cran.rstudio.com/')" > .Rprofile && \
     Rscript -e "install.packages('devtools')" && \
     Rscript -e "install.packages('ggplot2')" && \
     Rscript -e "install.packages('Rcpp')" && \
