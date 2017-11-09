@@ -3,9 +3,33 @@ FROM python:2.7.14
 
 MAINTAINER aokad <aokad@hgc.jp>
 
-RUN apt-get -y update && \
-    apt-get install -y dpkg-dev gcc g++ libc6-dev make patch tar && \
+RUN echo "deb http://deb.debian.org/debian stretch main" > /etc/apt/sources.list && \
+    echo "deb http://deb.debian.org/debian stretch-updates main" >> /etc/apt/sources.list && \
+    echo "deb http://security.debian.org stretch/updates main" >> /etc/apt/sources.list && \
+    apt-get -y update && \
+    apt-get install -y dpkg-dev gcc g++ libc6-dev make patch tar unzip && \
+    apt-get install -y zlib1g-dev  g++ dh-autoreconf libncurses-dev pkg-config libgd2-xpm-dev && \
+    apt-get install -y r-base libcurl4-openssl-dev libdbd-mysql libmysqlclient-dev libgeos-dev libxml2-dev libssl-dev && \
+    \
     mkdir -p /tools && \
+    \
+    cd /tools && \
+    wget http://www.cpan.org/src/5.0/perl-5.14.4.tar.gz && \
+    tar -xzf perl-5.14.4.tar.gz && \
+    rm perl-5.14.4.tar.gz && \
+    cd perl-5.14.4 && \
+    ./Configure -des -Dprefix=/usr/local/ -Dusethreads && \
+    make && \
+    make install && \
+    \
+    cd /tools && \
+    wget -nc https://github.com/ICGC-TCGA-PanCancer/PCAP-core/archive/v1.8.1.tar.gz && \
+    tar xzvf v1.8.1.tar.gz && \
+    rm v1.8.1.tar.gz && \
+    cd PCAP-core-1.8.1 && \
+    grep -l -r '/usr/bin/perl' * | xargs sed -i.bak -e 's;/usr/bin/perl;/usr/local/bin/perl;g' && \
+    cpan -f JSON && \
+    bash setup.sh /tools/ICGC && \
     \
     cd /tools && \
     echo "build BLAT v.34" && \
@@ -81,45 +105,12 @@ RUN apt-get -y update && \
     cd STAR-2.5.2a && \
     make
 
-# perl package
-RUN set -xv && \
-    apt-get -y update && \
-    echo "deb http://ftp.jp.debian.org/debian/ jessie main contrib non-free" >> /etc/apt/sources.list && \
-    apt-get -y update && \
-    apt-get install -y build-essential dh-autoreconf dpkg-dev g++ gcc libc6-dev libcurl4-gnutls-dev libgd2-xpm-dev libgnutls28-dev \
-                       libjson-perl libncurses-dev libncurses5-dev libp11-kit-dev \
-                       libssl-dev libtasn1-6-dev make nettle-dev patch pkg-config \
-                       tar zlib1g-dev && \
-    mkdir -p /tools && \
-    \
-    cd /tools && \
-    echo "build PCAP-core-dev.20150511" && \
-    wget https://github.com/cancerit/cgpBigWig/archive/0.4.4.tar.gz && \
-    tar xzvf 0.4.4.tar.gz && \
-    rm -f xzvf 0.4.4.tar.gz && \
-    cd cgpBigWig-0.4.4 && \
-    bash ./setup.sh /tools/ICGC && \
-    \
-    cd /tools && \
-    echo "build PCAP-core-dev.20150511" && \
-    wget -nc https://github.com/ICGC-TCGA-PanCancer/PCAP-core/archive/v1.8.2.tar.gz && \
-    tar xzvf v1.8.2.tar.gz && \
-    rm v1.8.2.tar.gz && \
-    cd PCAP-core-1.8.2 && \
-    bash setup.sh /tools/ICGC
-
-# Please add the following to beginning of path:
-#   /tools/ICGC/bin
-# Please add the following to beginning of PERL5LIB:
-#   /tools/ICGC/lib/perl5
-#   /tools/ICGC/lib/perl5/x86_64-linux-gnu-thread-multi
-
 # python package
-RUN apt-get install -y unzip && \
-    pip install Cython && \
-    pip install drmaa && \
+RUN pip install Cython && \
     pip install pysam && \
-    mkdir -p /tools && \
+    pip install numpy && \
+    pip install scipy && \
+    pip install primer3-py && \
     \
     cd /tools && \
     wget https://github.com/bunbun/ruffus/archive/v2.6.3.tar.gz && \
@@ -258,11 +249,7 @@ RUN apt-get install -y unzip && \
     rm -f v0.1.3.zip
 
 # R package
-RUN set -xv && \
-    echo "deb http://deb.debian.org/debian testing main" >> /etc/apt/sources.list && \
-    apt-get -y update && \
-    apt-get install -y r-base libcurl4-openssl-dev libdbd-mysql libmysqlclient-dev libgeos-dev libxml2-dev libssl-dev && \
-    echo "options(repos='https://cran.rstudio.com/')" > .Rprofile && \
+RUN echo "options(repos='https://cran.rstudio.com/')" > .Rprofile && \
     Rscript -e "install.packages('devtools')" && \
     Rscript -e "install.packages('ggplot2')" && \
     Rscript -e "install.packages('Rcpp')" && \

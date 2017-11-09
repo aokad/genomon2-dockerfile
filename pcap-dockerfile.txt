@@ -3,39 +3,32 @@ FROM python:2.7.14
 
 MAINTAINER aokad <aokad@hgc.jp> 
 
-RUN echo "deb http://deb.debian.org/debian testing main" >> /etc/apt/sources.list && \
-    echo "deb http://ftp.jp.debian.org/debian/ jessie main contrib non-free" >> /etc/apt/sources.list && \
+RUN echo "deb http://deb.debian.org/debian stretch main" > /etc/apt/sources.list && \
+    echo "deb http://deb.debian.org/debian stretch-updates main" >> /etc/apt/sources.list && \
+    echo "deb http://security.debian.org stretch/updates main" >> /etc/apt/sources.list && \
     apt-get -y update && \
-    apt-get install -y dpkg-dev gcc g++ libc6-dev make patch tar && \
-    apt-get install -y build-essential dh-autoreconf dpkg-dev g++ gcc \
-        libc6-dev libcurl4-gnutls-dev libgd-dev libgnutls28-dev \
-        libjson-perl libncurses-dev libncurses5-dev libp11-kit-dev \
-        libssl-dev libtasn1-6-dev make nettle-dev patch pkg-config \
-        tar zlib1g-dev && \
-    mkdir -p /tools && \
-    cd /tools && \
+    apt-get install -y dpkg-dev gcc g++ libc6-dev make patch tar unzip && \
+    apt-get install -y zlib1g-dev  g++ dh-autoreconf libncurses-dev pkg-config libgd2-xpm-dev && \
     \
+    mkdir -p /tools && \
+    \
+    cd /tools && \
     wget http://www.cpan.org/src/5.0/perl-5.14.4.tar.gz && \
     tar -xzf perl-5.14.4.tar.gz && \
     cd perl-5.14.4 && \
-    ./Configure -des -Dprefix=/src/local/ -Dusethreads && \
+    ./Configure -des -Dprefix=/usr/local/ -Dusethreads && \
     make && \
-    make test && \
     make install && \
     \
-	echo "build PCAP-core-dev.20150511" && \
-	wget https://github.com/cancerit/cgpBigWig/archive/0.4.4.tar.gz && \
-	tar xzvf 0.4.4.tar.gz && \
-	rm -f xzvf 0.4.4.tar.gz && \
-	cd cgpBigWig-0.4.4 && \
-	bash ./setup.sh /tools/ICGC && \
-	\
-	cd /tools && \
-	echo "build PCAP-core-dev.20150511" && \
-	wget -nc https://github.com/ICGC-TCGA-PanCancer/PCAP-core/archive/v1.8.2.tar.gz && \
-	tar xzvf v1.8.2.tar.gz && \
-	rm v1.8.2.tar.gz && \
-	cd PCAP-core-1.8.2 && \
-	bash setup.sh /tools/ICGC
+    cd /tools && \
+    wget -nc https://github.com/ICGC-TCGA-PanCancer/PCAP-core/archive/v1.8.1.tar.gz && \
+    tar xzvf v1.8.1.tar.gz && \
+    rm v1.8.1.tar.gz && \
+    cd PCAP-core-1.8.1 && \
+    grep -l -r '/usr/bin/perl' * | xargs sed -i.bak -e 's;/usr/bin/perl;/usr/local/bin/perl;g' && \
+    cpan -f JSON && \
+    bash setup.sh /tools/ICGC
 
 CMD ["/bin/bash"]
+
+
