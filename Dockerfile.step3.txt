@@ -1,4 +1,4 @@
-FROM /aokad/genomon2:step2
+FROM aokad/genomon2:step2
 MAINTAINER aokad <aokad@hgc.jp>
 
 RUN cd /tools && \
