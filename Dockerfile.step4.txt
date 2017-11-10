@@ -1,4 +1,4 @@
-FROM /aokad/genomon2:step3
+FROM aokad/genomon2:step3
 
 MAINTAINER aokad <aokad@hgc.jp>
 
