@@ -62,10 +62,10 @@ RUN cd /tools && \
     make && \
     \ 
     cd /tools && \
-    echo "build tophat-1.0.14.Linux" && \
-    wget -nc http://ccb.jhu.edu/software/tophat/downloads/tophat-1.0.14.Linux_x86_64.tar.gz && \
-    tar xzvf tophat-1.0.14.Linux_x86_64.tar.gz && \
-    rm -f tophat-1.0.14.Linux_x86_64.tar.gz && \
+    echo "build tophat-2.0.14.Linux" && \
+    wget -nc http://ccb.jhu.edu/software/tophat/downloads/tophat-2.0.14.Linux_x86_64.tar.gz && \
+    tar xzvf tophat-2.0.14.Linux_x86_64.tar.gz && \
+    rm -f tophat-2.0.14.Linux_x86_64.tar.gz && \
     \ 
     cd /tools && \
     echo "build STAR-2.5.2a" && \
@@ -74,5 +74,5 @@ RUN cd /tools && \
     rm -f 2.5.2a.tar.gz && \
     cd STAR-2.5.2a && \
     make
-
+    
 CMD ["/bin/bash"]
