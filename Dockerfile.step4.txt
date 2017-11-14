@@ -9,6 +9,7 @@ RUN pip install Cython && \
     pip install scipy && \
     pip install primer3-py && \
     pip install pandas && \
+    pip install pyVCF && \
     \
     cd /tools && \
     wget https://github.com/bunbun/ruffus/archive/v2.6.3.tar.gz && \
