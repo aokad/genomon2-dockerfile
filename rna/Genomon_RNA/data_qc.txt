@@ -1,0 +1,2 @@
+Average input read length	id	Number of input reads	Uniquely mapped reads %
+200	tumor	14282	97.34

@@ -1,0 +1,10 @@
+#AnalysisDate:2017-12-25 08
+#User:root
+#Version:GenomonSV-0.4.2rc sv_utils-0.4.0beta2
+id	Pos_1	Pos_2	Chr_1	Chr_2	Dir_1	Dir_2	Gene_1	Gene_2	Variant_Type
+tumor	2644790	2680137	11	11	+	-	KCNQ1OT1;KCNQ1	KCNQ1OT1;KCNQ1	deletion
+tumor	12553283	25051359	11	22	+	-	PARVA	POM121L10P	translocation
+tumor	27068016	27070655	22	22	-	-	MIAT	MIAT;MIATNB	inversion
+tumor	27068015	27070654	22	22	+	+	MIAT	MIAT;MIATNB	inversion
+tumor	40725723	40728297	22	22	+	-	TNRC6B	TNRC6B	deletion
+tumor	44640224	44642022	22	22	-	+	KIAA1644	KIAA1644	tandem_duplication
