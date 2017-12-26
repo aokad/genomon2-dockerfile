@@ -8,7 +8,7 @@ RUN echo "deb http://deb.debian.org/debian stretch main" > /etc/apt/sources.list
     echo "deb http://security.debian.org stretch/updates main" >> /etc/apt/sources.list && \
     apt-get -y update && \
     apt-get install -y dpkg-dev gcc g++ libc6-dev make patch tar unzip && \
-    apt-get install -y zlib1g-dev  g++ dh-autoreconf libncurses-dev pkg-config libgd2-xpm-dev && \
+    apt-get install -y zlib1g-dev  g++ dh-autoreconf libncurses-dev pkg-config libgd2-xpm-dev tabix && \
     apt-get install -y r-base libcurl4-openssl-dev libdbd-mysql libmysqlclient-dev libgeos-dev libxml2-dev libssl-dev && \
     \
     mkdir -p /tools && \
