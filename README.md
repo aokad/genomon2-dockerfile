@@ -1,4 +1,4 @@
-# genomon2 docker project
+# genomon2 docker project (Trial version)
 
 see detail: https://github.com/aokad/genomon2-dockerfile/wiki
 
