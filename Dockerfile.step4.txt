@@ -161,6 +161,6 @@ RUN pip install Cython && \
     \
     cd /tools && \
     touch dummy && \
-    echo LD_LIBRARY_PATH=/usr/local/lib >> /root/.bashrc
+    echo "export LD_LIBRARY_PATH=/usr/local/lib" >> /root/.bashrc
 
 CMD ["/bin/bash"]
