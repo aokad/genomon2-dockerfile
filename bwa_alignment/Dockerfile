@@ -25,7 +25,6 @@ RUN echo "deb http://deb.debian.org/debian stretch main" > /etc/apt/sources.list
     tar xjvf bwa-0.7.8.tar.bz2 && \
     cd bwa-0.7.8 && \
     make && \
-    make install && \
     \ 
     cd /tools && \
     echo "build samtools-1.2" && \
