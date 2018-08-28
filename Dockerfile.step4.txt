@@ -74,9 +74,9 @@ RUN pip install Cython && \
     \
     cd /tools && \
     wget -nc https://github.com/Genomon-Project/GenomonQC/archive/v2.0.3.zip && \
-    unzip v2.0.2.zip && \
-    rm -f v2.0.2.zip && \
-    cd GenomonQC-2.0.2 && \
+    unzip v2.0.3.zip && \
+    rm -f v2.0.3.zip && \
+    cd GenomonQC-2.0.3 && \
     python setup.py install && \
     \
     cd /tools && \
